@@ -18,6 +18,7 @@
     <p>
     <li><strong>Performed by:</strong> {{test.agent.nickname}} @ {{test.ip_address}}</li>
     <li><strong>Test type:</strong> {{test.test_type}}</li>
+    <li><strong>Test mode:</strong> {{test.mode}}</li>
     <li><strong>Network connection:</strong> {{test.network_connection}}</li>
     <li><strong>PCAP file:</strong> {{test.pcap}}</li>
     <li><strong>Location:</strong> {{test.lat}}, {{test.long}}</li>
@@ -36,6 +37,7 @@
           <tr>
             <th>Date</th>
             <th>Server</th>
+            <th>Direction</th>
             <th>Upload</th>
             <th>Download</th>
             <th>RTT</th>
@@ -45,6 +47,7 @@
           <tr>
             <td>{{item.date_tested}}</td>
             <td>{{item.server.ip_address}} ({{item.server.type}})</td>
+            <td>{{item.direction}}</td>
             <td>{{item.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
             <td>{{item.download_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
             <td>{{item.rtt}} ms</td>
