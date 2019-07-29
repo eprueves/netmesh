@@ -60,3 +60,10 @@ direction_choices = [
     ('reverse', 'Reverse'),
     ('unknown', 'Unknown')
 ]
+
+test_mode_choices = [
+    ('normal', 'Normal Mode'),
+    ('reverse', 'Reverse Mode'),
+    ('bidirectional', 'Bidirectional Mode'),
+    ('unknown', 'Unknown')
+]

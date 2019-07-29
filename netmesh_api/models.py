@@ -71,6 +71,7 @@ class Test(models.Model):
     pcap = models.CharField(max_length=100, null=True)
     lat = models.DecimalField(max_digits=10, decimal_places=7, default=16.647322)
     long = models.DecimalField(max_digits=10, decimal_places=7, default=121.071959)
+    mode = models.CharField(null=False, max_length=10, choices=choices.test_mode_choices, default='unknown')
 
 
 class DataPoint(models.Model):

@@ -54,6 +54,7 @@ class SubmitData(APIView):
         test.ip_address = self.get_client_ip(request)
         test.lat = report["lat"]
         test.long = report["long"]
+        test.mode = report["mode"]
         test.save()
         measurements = report["results"]
 
@@ -81,6 +82,9 @@ class SubmitData(APIView):
             new_data.tcp_eff = measurements[dataset]["tcp_eff"]
             new_data.ave_rtt = measurements[dataset]["ave_rtt"]
             new_data.buffer_delay = measurements[dataset]["buffer_delay"]
+            new_data.rtt = measurements[dataset]["rtt"]
+            new_data.upload_speed = measurements[dataset]["upload_speed"]
+            new_data.download_speed = measurements[dataset]["download_speed"]
             new_data.save()
 
         return Response('OK CREATED', status=status.HTTP_200_OK)
