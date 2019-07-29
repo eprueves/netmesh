@@ -67,6 +67,7 @@ class SubmitData(APIView):
             new_data.test_id = test
             new_data.server = server
             new_data.date_tested = measurements[dataset]["ts"]
+            new_data.direction = measurements[dataset]["direction"]
             new_data.path_mtu = measurements[dataset]["path_mtu"]
             new_data.baseline_rtt = measurements[dataset]["baseline_rtt"]
             new_data.bottleneck_bw = measurements[dataset]["bottleneck_bw"]
