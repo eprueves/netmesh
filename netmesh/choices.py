@@ -54,3 +54,9 @@ test_type_choices = [
     ]
 
 timezone_choices = [(v, v) for v in pytz.common_timezones]
+
+direction_choices = [
+    ('forward', 'Forward'),
+    ('reverse', 'Reverse'),
+    ('unknown', 'Unknown')
+]

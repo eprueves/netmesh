@@ -64,12 +64,22 @@ class SubmitData(APIView):
                 return Response("ERROR: Invalid Server ID",
                             status=status.HTTP_400_BAD_REQUEST)
             new_data = DataPoint()
+            new_data.test_id = test
             new_data.server = server
             new_data.date_tested = measurements[dataset]["ts"]
-            new_data.rtt = measurements[dataset]["rtt"]
-            new_data.upload_speed = measurements[dataset]["upload"]
-            new_data.download_speed = measurements[dataset]["download"]
-            new_data.test_id = test
+            new_data.path_mtu = measurements[dataset]["path_mtu"]
+            new_data.baseline_rtt = measurements[dataset]["baseline_rtt"]
+            new_data.bottleneck_bw = measurements[dataset]["bottleneck_bw"]
+            new_data.bdp = measurements[dataset]["bdp"]
+            new_data.min_rwnd = measurements[dataset]["min_rwnd"]
+            new_data.ave_tcp_tput = measurements[dataset]["ave_tcp_tput"]
+            new_data.itt = measurements[dataset]["itt"]
+            new_data.tcp_ttr = measurements[dataset]["tcp_ttr"]
+            new_data.trans_bytes = measurements[dataset]["trans_bytes"]
+            new_data.retrans_bytes = measurements[dataset]["retrans_bytes"]
+            new_data.tcp_eff = measurements[dataset]["tcp_eff"]
+            new_data.ave_rtt = measurements[dataset]["ave_rtt"]
+            new_data.buffer_delay = measurements[dataset]["buffer_delay"]
             new_data.save()
 
         return Response('OK CREATED', status=status.HTTP_200_OK)
