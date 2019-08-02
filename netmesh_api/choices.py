@@ -65,5 +65,6 @@ test_mode_choices = [
     ('normal', 'Normal Mode'),
     ('reverse', 'Reverse Mode'),
     ('bidirectional', 'Bidirectional Mode'),
+    ('simultaneous', 'Simultaneous Mode'),
     ('unknown', 'Unknown')
 ]
