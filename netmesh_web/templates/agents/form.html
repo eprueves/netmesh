@@ -5,11 +5,12 @@
 
 {% block content %}
 
-<h1>Add New Test Server</h1>
+<h1>Add New Test Agent</h1>
 <br>
 <form method="post">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ user_form|crispy }}
+    {{ agent_form|crispy }}
     <button type="submit" class="btn btn-sm btn-outline-secondary">Save</button>
 </form>
 {% endblock %}

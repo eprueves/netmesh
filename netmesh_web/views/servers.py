@@ -22,7 +22,7 @@ class ServerForm(forms.ModelForm):
         self.helper.field_class = 'col-sm-8'
         self.helper.layout.append(Submit('save', 'Save'))
         self.helper.layout.append(HTML(
-            '<a href="{}" class="btn btn-default" role="button">{}</a>'.format(
+            '<a href="{}" class="btn btn-sm btn-outline-secondary" role="button">{}</a>'.format(
                 reverse_lazy('servers', kwargs={}),
                 'Cancel')
         ))
