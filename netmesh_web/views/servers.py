@@ -1,21 +1,16 @@
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
-from django.contrib import messages as alerts
-from django.utils.translation import ugettext as _
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404
-
-from netmesh_web.forms import SearchForm
-
-from netmesh_api.models import Server
-from django import forms
-from django.urls import reverse_lazy
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML
 from crispy_forms.layout import Submit
-from crispy_forms.layout import Layout
-from crispy_forms.bootstrap import FormActions
+from django import forms
+from django.contrib import messages as alerts
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.translation import ugettext as _
+
+from netmesh_api.models import Server
 
 
 class ServerForm(forms.ModelForm):
@@ -57,6 +52,20 @@ def server_create(request, template_name='servers/form.html'):
         alerts.success(
             request,
             _("You've successfully created server '%s.'") % instance
+        )
+        return server_list(request)
+    return render(request, template_name, {'form': form})
+
+
+@login_required
+def server_update(request, uuid, template_name='servers/update.html'):
+    server = get_object_or_404(Server, uuid=uuid)
+    form = ServerForm(request.POST or None, instance=server)
+    if form.is_valid():
+        form.save()
+        alerts.success(
+            request,
+            _("You've successfully updated server '%s.'") % server
         )
         return server_list(request)
     return render(request, template_name, {'form': form})

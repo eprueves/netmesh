@@ -29,6 +29,7 @@ urlpatterns += [
 urlpatterns += [
     path('servers/', servers.server_list, name='servers'),
     path('servers/create', servers.server_create, name='server_create'),
+    path('servers/update/<uuid>', servers.server_update, name='server_update'),
 ]
 
 """ Tests """
