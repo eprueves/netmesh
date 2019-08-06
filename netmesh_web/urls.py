@@ -23,6 +23,7 @@ urlpatterns += [
 urlpatterns += [
     path('agents/', agents.agent_list, name='agents'),
     path('agents/create/', agents.agent_create, name='agent_create'),
+    path('agents/update/<pk>', agents.agent_update, name='agent_update'),
 ]
 
 """ Servers """

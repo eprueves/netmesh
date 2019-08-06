@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from netmesh_api.models import AgentProfile
+from django.shortcuts import get_object_or_404
 
 
 class UserForm(forms.ModelForm):
@@ -65,6 +66,34 @@ def agent_create(request, template_name='agents/form.html'):
         alerts.success(
             request,
             _("You've successfully created agent '%s.'") % agent_instance
+        )
+        return agent_list(request)
+
+    my_form = {
+        'user_form': user_form,
+        'agent_form': agent_form
+    }
+    return render(request, template_name, my_form)
+
+
+@login_required
+def agent_update(request, pk, template_name='agents/form.html'):
+    agent = get_object_or_404(AgentProfile, pk=pk)
+    user = agent.user
+    user.password = ""  # so that we wont see hash of the old password
+    user_form = UserForm(request.POST or None, instance=user)
+    agent_form = AgentForm(request.POST or None, instance=agent)
+
+    if user_form.is_valid() and agent_form.is_valid():
+        user_instance = user_form.save(commit=False)
+        user_instance.password = make_password(user_form.cleaned_data['password'])
+        user_instance = user_form.save()
+        agent_instance = agent_form.save(commit=False)
+        agent_instance.user = user_instance
+        agent_instance.save()
+        alerts.success(
+            request,
+            _("You've successfully updated agent '%s.'") % agent_instance
         )
         return agent_list(request)
 
