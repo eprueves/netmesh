@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
+from django.urls import reverse_lazy
 
 from netmesh_api.models import AgentProfile
 from django.shortcuts import get_object_or_404
@@ -17,8 +18,9 @@ class UserForm(forms.ModelForm):
         super(UserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-sm-2'
+        self.helper.field_class = 'col-sm-8'
+        self.helper.form_tag = False
 
     class Meta:
         model = User
@@ -28,11 +30,11 @@ class UserForm(forms.ModelForm):
 class AgentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AgentForm, self).__init__(*args, **kwargs)
-
         self.helper = FormHelper(self)
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-sm-2'
+        self.helper.field_class = 'col-sm-8'
+        self.helper.form_tag = False
 
     class Meta:
         model = AgentProfile

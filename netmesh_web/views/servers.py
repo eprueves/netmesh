@@ -18,9 +18,10 @@ class ServerForm(forms.ModelForm):
         super(ServerForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'post'
         self.helper.label_class = 'col-sm-2'
         self.helper.field_class = 'col-sm-8'
-        self.helper.layout.append(Submit('save', 'Save'))
+        self.helper.layout.append(Submit('save', 'Save', css_class='btn btn-sm btn-primary'))
         self.helper.layout.append(HTML(
             '<a href="{}" class="btn btn-sm btn-outline-secondary" role="button">{}</a>'.format(
                 reverse_lazy('servers', kwargs={}),

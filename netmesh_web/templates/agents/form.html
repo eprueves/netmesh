@@ -7,10 +7,13 @@
 
 <h1>Add New Test Agent</h1>
 <br>
-<form method="post">
+<form method="post" class="form-horizontal">
     {% csrf_token %}
-    {{ user_form|crispy }}
-    {{ agent_form|crispy }}
-    <button type="submit" class="btn btn-sm btn-outline-secondary">Save</button>
+    {% crispy user_form %}
+    {% crispy agent_form %}
+    <div class="mr-2">
+        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+        <a href="{% url 'agents' %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
+    </div>
 </form>
 {% endblock %}
