@@ -83,7 +83,7 @@ def agent_create(request, template_name='agents/form.html'):
 
     my_form = {
         'user_form': user_form,
-        'agent_form': agent_form,
+        'agent_form': agent_form
     }
     return render(request, template_name, my_form)
 
@@ -92,6 +92,7 @@ def agent_create(request, template_name='agents/form.html'):
 def agent_update(request, pk, template_name='agents/update.html'):
     agent = get_object_or_404(AgentProfile, pk=pk)
     user_form = UserForm(request.POST or None, instance=agent.user)
+
     agent_form = AgentForm(request.POST or None, instance=agent)
 
     if user_form.is_valid() and agent_form.is_valid():
@@ -109,6 +110,6 @@ def agent_update(request, pk, template_name='agents/update.html'):
 
     my_form = {
         'user_form': user_form,
-        'agent_form': agent_form,
+        'agent_form': agent_form
     }
     return render(request, template_name, my_form)
