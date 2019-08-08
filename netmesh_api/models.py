@@ -108,3 +108,20 @@ class DataPoint(models.Model):
     tcp_eff = models.FloatField(null=True)  # TCP Efficiency, in %
     ave_rtt = models.FloatField(null=True)  # Average Round Trip Time, in ms
     buffer_delay = models.FloatField(null=True)  # Buffer Delay, in %
+
+
+class Traceroute(models.Model):
+    origin_ip = models.GenericIPAddressField()
+    dest_ip = models.GenericIPAddressField()
+
+
+class Hop(models.Model):
+    traceroute = models.ForeignKey(Traceroute, null=False, on_delete=models.CASCADE)
+    hop_index = models.IntegerField(null=False)
+    time1 = models.FloatField()
+    time2 = models.FloatField()
+    time3 = models.FloatField()
+    host_name = models.CharField()
+    host_ip = models.GenericIPAddressField()
+
+
