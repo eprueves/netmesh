@@ -13,6 +13,10 @@
     </div>
 </div>
 
+{% for message in messages %}
+    <div class='alert alert-info message'>{{ message }}</div>
+{% endfor %}
+
 <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
@@ -22,7 +26,6 @@
             <th>IP Address</th>
             <th>Type</th>
             <th>Location</th>
-            <th>GPS</th>
             <th></th>
         </tr>
         </thead>
@@ -35,7 +38,6 @@
             <td>{{server.ip_address}}</td>
             <td>{{server.type}}</td>
             <td>{{server.city}}, {{server.province}}</td>
-            <td>{{server.lat}}, {{server.long}}</td>
             <td><a href="{% url 'server_update' server.uuid %}"
                    title="Update">Update</a></td>
         </tr>
@@ -64,4 +66,16 @@
 </div>
 
 
+{% block js %}
+<script>
+  $(function() {
+    // Fade out all messages after a delay.
+    setTimeout(function() {
+      $('.alert.message').fadeOut(500);
+    }, 3000);
+  });
+
+</script>
+
+{% endblock %}
 {% endblock %}

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'mathfilters',
     'bootstrap4',
+    'guardian',
     'netmesh_api',
     'netmesh_web'
 ]
@@ -94,6 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 'guardian.backends.ObjectPermissionBackend')
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -107,7 +109,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+TIME_ZONE = 'UTC'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
