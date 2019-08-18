@@ -111,17 +111,17 @@ class DataPoint(models.Model):
 
 
 class Traceroute(models.Model):
-    origin_ip = models.GenericIPAddressField()
-    dest_ip = models.GenericIPAddressField()
+    origin_ip = models.GenericIPAddressField(null=False)
+    dest_ip = models.GenericIPAddressField(null=False)
 
 
 class Hop(models.Model):
     traceroute = models.ForeignKey(Traceroute, null=False, on_delete=models.CASCADE)
     hop_index = models.IntegerField(null=False)
-    time1 = models.FloatField()
-    time2 = models.FloatField()
-    time3 = models.FloatField()
-    host_name = models.CharField()
-    host_ip = models.GenericIPAddressField()
+    time1 = models.FloatField(null=True)
+    time2 = models.FloatField(null=True)
+    time3 = models.FloatField(null=True)
+    host_name = models.CharField(max_length=200)  # domain name or fallback to IP address if no domain name
+    host_ip = models.GenericIPAddressField(null=True)
 
 
