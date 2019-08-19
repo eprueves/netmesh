@@ -113,6 +113,7 @@ class DataPoint(models.Model):
 class Traceroute(models.Model):
     origin_ip = models.GenericIPAddressField(null=False)
     dest_ip = models.GenericIPAddressField(null=False)
+    dest_name = models.CharField(max_length=200, null=False)
 
 
 class Hop(models.Model):
