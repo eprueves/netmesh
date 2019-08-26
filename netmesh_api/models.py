@@ -126,3 +126,12 @@ class Hop(models.Model):
     host_ip = models.GenericIPAddressField(null=True)
 
 
+class Speedtest(models.Model):
+    test_id = models.UUIDField(null=False, editable=False, unique=True)
+    sid = models.CharField(max_length=32, null=False, editable=False)
+    ip_address = models.GenericIPAddressField(null=False)
+    # server = models.ForeignKey(Server, on_delete=models.CASCADE)
+    rtt = models.FloatField(null=False)
+    upload_speed = models.FloatField(null=False)
+    download_speed = models.FloatField(null=False)
+
