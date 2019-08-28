@@ -66,6 +66,8 @@ class Server(models.Model):
     city = models.CharField(max_length=200, null=True)
     province = models.CharField(max_length=200, null=True)
     country = models.CharField(max_length=200, default='Philippines')
+    sponsor = models.CharField(max_length=200, default='SponsorName')  # organization that hosts this server
+    hostname = models.URLField(max_length=500, default="http://dummyhostname.com")
 
     def __str__(self):
         return "Server %s (%s)" % (self.nickname, self.uuid)
@@ -111,6 +113,7 @@ class DataPoint(models.Model):
 
 
 class Traceroute(models.Model):
+    date = models.DateTimeField(default=timezone.now)
     origin_ip = models.GenericIPAddressField(null=False)
     dest_ip = models.GenericIPAddressField(null=False)
     dest_name = models.CharField(max_length=200, null=False)
@@ -127,6 +130,7 @@ class Hop(models.Model):
 
 
 class Speedtest(models.Model):
+    date = models.DateTimeField(default=timezone.now)
     test_id = models.UUIDField(null=False, editable=False, unique=True)
     sid = models.CharField(max_length=32, null=False, editable=False)
     ip_address = models.GenericIPAddressField(null=False)
