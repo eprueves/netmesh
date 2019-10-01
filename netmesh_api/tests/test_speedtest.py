@@ -8,13 +8,7 @@ from rest_framework.test import APIClient
 from rest_framework.test import APIRequestFactory
 
 from netmesh_api import models
-
-
-def random_ip():
-    ip = "%s.%s.%s.%s" % (
-        random.randint(1, 255), random.randint(1, 255),
-        random.randint(1, 255), random.randint(1, 255))
-    return ip
+from netmesh_api.tests.utils import random_ip
 
 
 class SpeedtestTestCase(TestCase):

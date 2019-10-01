@@ -5,7 +5,7 @@ import json
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import APIClient
 
-from netmesh_api.tests.test_utils import random_ip
+from netmesh_api.tests.utils import random_ip
 
 
 def generate_traceroute():
