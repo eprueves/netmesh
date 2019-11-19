@@ -26,15 +26,6 @@ def do_speedtest(request, template_name='speedtest/main.html'):
 
 
 def speedtest_list(request, template_name='speedtest/list.html'):
-    # test_lst = Speedtest.objects.all().order_by('-date')
-    # paginator = Paginator(test_lst, 15)
-    # page = request.GET.get('page')
-    # speedtests = paginator.get_page(page)
-    # context = {
-    #     'speedtests': speedtests
-    # }
-    # return render(request, template_name, context=context)
-
     context = {}
     if 'search' in request.GET:
         test_lst = Speedtest.objects.all().order_by('-date')
@@ -65,7 +56,7 @@ def speedtest_list(request, template_name='speedtest/list.html'):
 
     form = SearchForm(form_action='speedtest_list')
     context = {
-        'tests': speedtests,
+        'speedtests': speedtests,
         'form': form,
         'is_paginated': is_paginated
     }
