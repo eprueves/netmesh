@@ -64,7 +64,7 @@ def speedtest_list(request, template_name='speedtest/list.html'):
     return render(request, template_name, context=context)
 
 def get_csv(request):
-    qs = DataPoint.objects.values('date',
+    qs = Speedtest.objects.values('date',
                                   'test_id',
                                   'sid',
                                   'ip_address__ip_address',
