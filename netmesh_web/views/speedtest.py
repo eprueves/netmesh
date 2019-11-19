@@ -1,3 +1,4 @@
+import djqscsv
 from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib import messages as alerts
@@ -61,3 +62,23 @@ def speedtest_list(request, template_name='speedtest/list.html'):
         'is_paginated': is_paginated
     }
     return render(request, template_name, context=context)
+
+def get_csv(request):
+    qs = DataPoint.objects.values('date',
+                                  'test_id',
+                                  'sid',
+                                  'ip_address__ip_address',
+                                  'ip_address__isp',
+                                  'server__uuid',
+                                  'server__nickname',
+                                  'server__ip_address',
+                                  'rtt_ave',
+                                  'rtt_min',
+                                  'rtt_max',
+                                  'upload_speed',
+                                  'download_speed'
+                                  )
+    return djqscsv.render_to_csv_response(qs,
+                                          filename='ntc-netmesh-web-based',
+                                          append_datestamp=True,
+                                          streaming=True)
