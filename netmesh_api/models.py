@@ -190,10 +190,69 @@ class Hop(models.Model):
     host_ip = models.GenericIPAddressField(null=True)
 
 
+class CellInfo(models.Model):
+    """
+        Model to represent a cellular tower / base station
+        Depending on the network type, some of these fields may be not applicable and can be left blank
+    """
+    date_created = models.DateTimeField(default=timezone.now)
+    cell_id = models.IntegerField(null=False)  # is this unique across operators?
+    lac = models.IntegerField(null=True)
+    operator_name = models.CharField(max_length=20, null=True)
+    mnc = models.PositiveIntegerField(null=True)
+    mcc = models.PositiveIntegerField(null=True)
+    connection_type = models.CharField(max_length=20, null=True)  # either GSM, wcdma, lte, etc
+    lat = models.FloatField(default=16.647322, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
+    long = models.FloatField(default=121.071959, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
+
+
+class SignalStrength(models.Model):
+    """
+        Model to represent RSSI readings of phones
+        Several phones can report different signal strength measurements of the same base station,
+        which is dependent on how far away the mobile phone is from the tower
+    """
+    date_measured = models.DateTimeField(default=timezone.now)
+    cell = models.ForeignKey(CellInfo, on_delete=models.CASCADE)
+    signal_strength = models.FloatField(null=True)
+    signal_overall_quality = models.IntegerField(null=True)
+    snr = models.FloatField(null=True)
+    timing_advance = models.IntegerField(null=True)
+    bandwidth = models.IntegerField(null=True)
+
+
+class NetworkConnection(models.Model):
+    """
+        Model to represent a mobile phone's network connection
+    """
+    date = models.DateTimeField(default=timezone.now)
+    connection_type = models.CharField(max_length=20, null=False)  # either mobile or Wifi
+    connection_subtype = models.CharField(max_length=20, null=True)  # ex "HSPA+", or None for WiFI
+    connection_extra_info = models.CharField(max_length=100, null=True)  # "http.globe.com.ph" APn or None for Wifi
+    operator_name = models.CharField(max_length=20, null=True)  # globe, smart, etc, None for Wifi
+    sim1_mccmnc = models.PositiveIntegerField(null=True)  # ex 51502
+    sim2_mccmnc = models.PositiveIntegerField(null=True)  # ex 51503
+    registered_cell = models.ForeignKey(SignalStrength, on_delete=models.CASCADE)  # BTS where phone is currently camped
+
+
+class MobileInfo(models.Model):
+    """
+        Model to represent a mobile device
+        sid (unique session id) from flask-socketio will tie speedtest results with device info
+    """
+    api_version = models.CharField(max_length=10)
+    imei = models.CharField(max_length=50)  # are we getting this? or consider getting hash?
+    connection = models.ForeignKey(NetworkConnection, on_delete=models.CASCADE)
+    sid = models.CharField(max_length=32, null=False, editable=False)
+
+
 class Speedtest(models.Model):
     """
         Model to represent results from a web-based speedtest.
         Note that the web-based speedtest is simpler compared to the RFC-6349 result representation
+
+        sid (unique session id) from flask-socketio will tie speedtest results with device info
+        if will be submitting results against an ookla server, maybe mobile app creates its own sid?
     """
     date = models.DateTimeField(default=timezone.now)
     test_id = models.UUIDField(null=False, editable=False, unique=True)
@@ -203,5 +262,8 @@ class Speedtest(models.Model):
     rtt_ave = models.FloatField(null=False)
     rtt_min = models.FloatField(null=False)
     rtt_max = models.FloatField(null=False)
+    jitter = models.FloatField(null=True)
     upload_speed = models.FloatField(null=False)
     download_speed = models.FloatField(null=False)
+    # mobile_info = models.ForeignKey(MobileInfo, on_delete=models.CASCADE)
+    # ideally, should be FK, but not sure if we will receive results and device info sequentially
