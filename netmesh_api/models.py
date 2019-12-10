@@ -205,3 +205,29 @@ class Speedtest(models.Model):
     rtt_max = models.FloatField(null=False)
     upload_speed = models.FloatField(null=False)
     download_speed = models.FloatField(null=False)
+
+
+class NMProDataPoint(models.Model):
+    """
+        Model for a manually entered NetMaster Pro measurement
+    """
+    date_created = models.DateTimeField(blank=True, default=timezone.now)
+    ip_address = models.GenericIPAddressField(null=False, verbose_name='Client IP address')
+    server = models.GenericIPAddressField(null=False, verbose_name='Server IP address')
+    direction = models.CharField(null=False, max_length=10, choices=choices.direction_choices, default='unknown')
+    path_mtu = models.IntegerField(null=True, verbose_name='Path MTU', help_text='in bytes')
+    baseline_rtt = models.FloatField(null=True, verbose_name='Baseline RTT', help_text='in ms')
+    bottleneck_bw = models.FloatField(null=True, verbose_name='Bottleneck Bandwidth', help_text='in Mbps')
+    bdp = models.FloatField(null=True, verbose_name='Bandwidth Delay Product', help_text='in bits')
+    min_rwnd = models.FloatField(null=True, verbose_name='Minimum Receive Window Size', help_text='in Kbytes')
+    ave_tcp_tput = models.FloatField(null=True, verbose_name='Average TCP Throughput', help_text='in Mbps')
+    ideal_tcp_tput = models.FloatField(null=True, verbose_name='Ideal TCP throughput', help_text='in Mbps')
+    actual_transfer_time = models.FloatField(null=True, verbose_name='Actual Transfer Time', help_text='in secs')
+    ideal_transfer_time = models.FloatField(null=True, verbose_name='Ideal Transfer Time', help_text='in secs')
+    tcp_ttr = models.FloatField(null=True, verbose_name='TCP transfer Time Ratio', help_text='unitless')
+    trans_bytes = models.FloatField(null=True, verbose_name='Transmitted Bytes', help_text='in bytes')
+    retrans_bytes = models.FloatField(null=True, verbose_name='Retransmitted Bytes', help_text='in bytes')
+    tcp_eff = models.FloatField(null=True, verbose_name='TCP Efficiency', help_text='in %')
+    ave_rtt = models.FloatField(null=True, verbose_name='Average Round Trip Time', help_text='in ms')
+    buffer_delay = models.FloatField(null=True, verbose_name='Buffer Delay', help_text='in %')
+
